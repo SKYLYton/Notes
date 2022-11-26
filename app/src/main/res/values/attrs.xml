@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <declare-styleable name="DoubleAppBar">
+
+        <attr name="firstMenu" format="reference"/>
+
+        <attr name="secondMenu" format="reference"/>
+
+        <attr name="title" />
+
+    </declare-styleable>
+
+</resources>
