@@ -1,10 +1,62 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="purple_200">#FFBB86FC</color>
-    <color name="purple_500">#FF6200EE</color>
-    <color name="purple_700">#FF3700B3</color>
-    <color name="teal_200">#FF03DAC5</color>
-    <color name="teal_700">#FF018786</color>
+
+    <color name="status">#006397</color>
+    <color name="primary">#006397</color>
+    <color name="onPrimary">#FFFFFF</color>
+    <color name="primaryContainer">#CBE6FF</color>
+    <color name="onPrimaryContainer">#001D31</color>
+    <color name="secondary">#50606F</color>
+    <color name="onSecondary">#FFFFFF</color>
+    <color name="secondaryContainer">#D4E4F6</color>
+    <color name="onSecondaryContainer">#0D1D29</color>
+    <color name="tertiary">#66587B</color>
+    <color name="onTertiary">#FFFFFF</color>
+    <color name="tertiaryContainer">#EDDBFF</color>
+    <color name="onTertiaryContainer">#211534</color>
+    <color name="error">#BA1B1B</color>
+    <color name="errorContainer">#FFDAD4</color>
+    <color name="onError">#FFFFFF</color>
+    <color name="onErrorContainer">#410001</color>
+    <color name="background">#FCFCFF</color>
+    <color name="onBackground">#1A1C1E</color>
+    <color name="surface">#FCFCFF</color>
+    <color name="onSurface">#1A1C1E</color>
+    <color name="surfaceVariant">#DEE3EA</color>
+    <color name="onSurfaceVariant">#41474D</color>
+    <color name="outline">#72777E</color>
+    <color name="inverseOnSurface">#F0F0F3</color>
+    <color name="inverseSurface">#2F3032</color>
+    <color name="inversePrimary">#8FCDFF</color>
+    <color name="shadow">#000000</color>
+    <color name="primaryInverse">#8FCDFF</color>
+    <color name="windowsBackground">#E7EFF6</color>
+    <color name="divider_color">#CBD2D8</color>
+
+
+    <color name="purple_200">#80d4ff</color>
+    <color name="purple_500">#00a8fe</color>
+    <color name="purple_700">#0987d9</color>
+    <color name="teal_200">#81d8ef</color>
+    <color name="teal_700">#118ea9</color>
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
+    <color name="red">#E60808</color>
+
+    <color name="text_1">#FF000000</color>
+    <color name="text_2">#5A5A5A</color>
+    <color name="text_3">#494949</color>
+    <color name="text_4">#EDEDED</color>
+
+    <color name="background_1">#FFFFFFFF</color>
+    <color name="background_2">#ECECEC</color>
+    <color name="background_3">#FFFFFF</color>
+    <color name="background_4">#F6F6F6</color>
+    <color name="background_5">#F6F6F6</color>
+
+
+    <color name="action">#FF6200EE</color>
+
+
+    <color name="seed">#0D81BF</color>
 </resources>

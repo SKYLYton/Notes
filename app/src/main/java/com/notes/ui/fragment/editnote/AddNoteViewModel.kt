@@ -1,4 +1,4 @@
-package com.notes.ui.fragment.note
+package com.notes.ui.fragment.editnote
 
 import com.notes.model.NoteModel
 import com.notes.ui.base.BaseViewModel
@@ -12,8 +12,8 @@ import javax.inject.Inject
  * @author Fedotov Yakov
  */
 @HiltViewModel
-class EditNoteViewModel @Inject constructor(
-    private val interactor: EditNoteInteractor
+class AddNoteViewModel @Inject constructor(
+    private val interactor: AddNoteInteractor
 ) : BaseViewModel() {
 
     private val _uiState = MutableSharedFlow<BaseState<Boolean>>()
@@ -29,7 +29,7 @@ class EditNoteViewModel @Inject constructor(
         }
     }
 
-    fun saveNote(note: NoteModel) {
+    fun processNote(note: NoteModel) {
         noteModel = noteModel.clone(note.name, note.text, note.date)
         interactor.saveNote(noteModel).handleResult(onSuccess = { noteDB ->
             emit(_uiState, BaseState.Success(note.equalsFromDB(noteDB)))

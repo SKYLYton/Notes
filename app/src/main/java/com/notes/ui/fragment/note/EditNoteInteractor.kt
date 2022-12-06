@@ -14,11 +14,6 @@ class EditNoteInteractor @Inject constructor(
     private val noteRepository: NoteRepository
 ) : BaseInteractor() {
 
-    fun addNewNote(note: NoteModel) = flow {
-        noteRepository.add(note)
-        emit(noteRepository.lastNote().first())
-    }
-
     fun saveNote(note: NoteModel) = flow {
         noteRepository.update(note)
         emit(noteRepository.note(note.id ?: 0).first())

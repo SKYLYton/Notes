@@ -6,6 +6,7 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.OnBackPressedCallback
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
@@ -15,8 +16,7 @@ import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
 import androidx.transition.TransitionManager
 import androidx.viewbinding.ViewBinding
-import com.notes.ui.activity.ActivityRouter
-import com.notes.ui.activity.Screen
+import com.notes.ui.activity.MainActivity
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.launch
 
@@ -24,6 +24,7 @@ import kotlinx.coroutines.launch
  * @author Fedotov Yakov
  */
 typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
+
 abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<Binding>) :
     Fragment() {
 
@@ -64,10 +65,6 @@ abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<
             findNavController().navigate(destination)
         }
 
-    protected fun navigateTo(screen: Screen, bundle: Bundle? = null) {
-        (activity as ActivityRouter).navigationTo(screen, bundle)
-    }
-
     protected fun navigateToCall(number: String) {
         startActivity(Intent(Intent.ACTION_DIAL).apply {
             data = Uri.parse("tel:$number")
@@ -89,11 +86,22 @@ abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<
     }
 
     protected fun runBindingWithAnim(block: Binding.() -> Unit) {
+        runWithAnim()
+        binding?.let(block)
+    }
+
+    protected fun runWithAnim() {
         container?.let {
-            //TransitionManager.endTransitions(it)
             TransitionManager.beginDelayedTransition(it, transition)
         }
-        binding?.let(block)
+    }
+
+    protected fun addHandleBackCallBack(callback: OnBackPressedCallback) {
+        requireActivity().onBackPressedDispatcher.addCallback(this, callback)
+    }
+
+    protected fun addHandleBackCallBackActivity(callback: OnBackPressedCallback) {
+        requireActivity().onBackPressedDispatcher.addCallback(requireActivity(), callback)
     }
 
     override fun onResume() {
@@ -116,4 +124,16 @@ abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<
         binding = null
     }
 
+    protected fun onBackPressed() {
+        mainActivity?.onBackPressedDispatcher?.onBackPressed()
+    }
+
+    protected val isLandscape: Boolean
+        get() = (activity as MainActivity).isLandscape
+
+    protected val isMainScreen: Boolean
+        get() = (activity as MainActivity).isMainScreen
+
+    protected val mainActivity: MainActivity?
+        get() = activity as? MainActivity
 }

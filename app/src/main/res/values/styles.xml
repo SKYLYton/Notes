@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <style name="Widget" />
+
+    <style name="Widget.MainBackground">
+        <item name="android:background">@drawable/main_background</item>
+        <item name="android:paddingStart">16dp</item>
+        <item name="android:paddingEnd">16dp</item>
+        <item name="android:paddingTop">8dp</item>
+        <item name="android:paddingBottom">8dp</item>
+    </style>
+
+    <style name="Widget.LinearLayout" />
+
+    <style name="Widget.LinearLayout.List" parent="Widget.MainBackground">
+        <item name="android:paddingTop">4dp</item>
+        <item name="android:paddingBottom">4dp</item>
+        <item name="android:divider">?android:dividerHorizontal</item>
+        <item name="android:showDividers">middle</item>
+    </style>
+
+    <style name="Widget.TextView" />
+
+    <style name="Widget.TextView.ItemMenu">
+        <item name="android:textSize">18sp</item>
+        <item name="android:paddingTop">16dp</item>
+        <item name="android:paddingBottom">16dp</item>
+        <item name="android:textColor">@color/onSecondaryContainer</item>
+        <item name="android:drawablePadding">16dp</item>
+    </style>
+
+</resources>

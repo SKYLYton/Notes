@@ -3,26 +3,31 @@ package com.notes.ui.activity
 import android.content.res.Configuration
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
-import androidx.navigation.NavOptions
-import androidx.navigation.fragment.NavHostFragment
-import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.notes.R
 import com.notes.databinding.ActivityMainBinding
+import com.notes.extension.setupWithNavController
 import dagger.hilt.android.AndroidEntryPoint
 
 
-
-
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity(), ActivityRouter {
+class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
 
-    private lateinit var leftController: NavController
-    private lateinit var rightController: NavController
-    private lateinit var navController: NavController
+    private var currentNavController: LiveData<NavController>? = null
+
+    private var navController: NavController? = null
+
+
+    private val onDestinationChangedListener =
+        NavController.OnDestinationChangedListener { controller, destination, arguments ->
+
+            // if you need to show/hide bottom nav or toolbar based on destination
+            // binding.bottomNavigationView.isVisible = destination.id != R.id.itemDetail
+        }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -32,72 +37,55 @@ class MainActivity : AppCompatActivity(), ActivityRouter {
         actionBar?.hide()
         supportActionBar?.hide()
 
-        if (isLandscape) {
-            setLandscapeNavigation()
-        } else {
-            setPortraitNavigation()
+        if (savedInstanceState == null) {
+            setUpBottomNavigationBar()
         }
 
     }
 
-    private fun setLandscapeNavigation() {
-        initLeftNavHost()
-        initRightNavHost()
+    override fun onRestoreInstanceState(savedInstanceState: Bundle) {
+        super.onRestoreInstanceState(savedInstanceState)
+        setUpBottomNavigationBar()
     }
 
-    private fun initLeftNavHost() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.left_nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val inflater = navController.navInflater
-        val graph = inflater.inflate(R.navigation.left_navigation)
-        graph.setStartDestination(R.id.notesFragment)
-        navController.graph = graph
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        leftController = navController
-    }
+    private fun setUpBottomNavigationBar() {
+        val navGraphIds = listOf(
+            R.navigation.main_navigation,
+            R.navigation.menu_navigation
+        )
 
-    private fun initRightNavHost() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.right_nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val inflater = navController.navInflater
-        val graph = inflater.inflate(R.navigation.right_navigation)
-        //graph.setStartDestination(R.id.notesFragment)
-        navController.graph = graph
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        rightController = navController
-    }
+        val controller = binding.navView.setupWithNavController(
+            navGraphIds = navGraphIds,
+            fragmentManager = supportFragmentManager,
+            containerId = R.id.nav_host_fragment,
+            intent = intent
+        )
 
-    private fun setPortraitNavigation() {
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        val navController = navHostFragment.navController
-        val inflater = navController.navInflater
-        val graph = inflater.inflate(R.navigation.main_navigation)
-        graph.setStartDestination(R.id.notesFragment)
-        navController.graph = graph
-        val appBarConfiguration = AppBarConfiguration(navController.graph)
-        setupActionBarWithNavController(navController, appBarConfiguration)
-        this.navController = navController
-    }
+        controller.observe(this) { navController ->
+            this.navController = navController
+            setupActionBarWithNavController(navController)
 
-    override fun navigationTo(screen: Screen, bundle: Bundle?) {
-        if (isLandscape) {
-            when (screen) {
-                Screen.Notes -> leftController.navigate(screen.id, bundle)
-                Screen.EditNote -> {
-                    rightController.popBackStack()
-                    rightController.navigate(screen.id, bundle)
-                }
-            }
-        } else {
-            navController.navigate(screen.id, bundle)
+            // unregister old onDestinationChangedListener, if it exists
+            currentNavController?.value?.removeOnDestinationChangedListener(
+                onDestinationChangedListener
+            )
+
+            // add onDestinationChangedListener to the new NavController
+            navController.addOnDestinationChangedListener(onDestinationChangedListener)
         }
+
+        currentNavController = controller
     }
 
-    private val isLandscape: Boolean
+    override fun onSupportNavigateUp(): Boolean {
+        return currentNavController?.value?.navigateUp() ?: false
+    }
+
+    val isLandscape: Boolean
         get() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
+
+    val isMainScreen: Boolean
+        get() = navController?.currentDestination?.id == R.id.notesFragment
+
+
 }

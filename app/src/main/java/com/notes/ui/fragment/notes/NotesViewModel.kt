@@ -19,8 +19,30 @@ class NotesViewModel @Inject constructor(
     private val _uiState = MutableSharedFlow<BaseState<List<NoteModel>>>()
     val uiState = _uiState.asSharedFlow()
 
+    private val _selectedNoteState = MutableSharedFlow<NoteModel>()
+    val selectedNoteState = _selectedNoteState.asSharedFlow()
+
+    private val _addNoteState = MutableSharedFlow<NoteModel>()
+    val addNoteState = _addNoteState.asSharedFlow()
+
+    var selectedNoteId: Int? = null
+
     override fun onStart() {
         update()
+    }
+
+    fun loadSelectedId() {
+        selectedNoteId?.let {
+            interactor.fetchNote(it).handleResult(onSuccess = { note ->
+                emit(_selectedNoteState, note)
+            })
+        }
+    }
+
+    fun addNote() {
+        interactor.saveNote(NoteModel()).handleResult(onSuccess = { note ->
+            emit(_addNoteState, note)
+        })
     }
 
     fun update() {

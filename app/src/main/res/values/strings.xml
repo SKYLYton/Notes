@@ -1,11 +1,17 @@
 <resources>
     <string name="app_name">Notes</string>
 
+    <string name="placeholder">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
+
     <!-- menu -->
     <string name="title_edit">Редактировать</string>
     <string name="title_delete">Удалить</string>
+    <string name="title_check_all">Выделить все</string>
     <string name="title_add">Добавить</string>
     <string name="title_save">Сохранить</string>
+    <string name="title_notes">Заметки</string>
+    <string name="title_menu">Меню</string>
+
 
     <!-- NotesFragment -->
     <string name="notes_fragment_title">Заметки</string>
@@ -16,5 +22,19 @@
     <string name="edit_note_fragment_title_edit">Заметка</string>
     <string name="edit_note_fragment_name">Название</string>
     <string name="edit_note_fragment_text">Текст заметки</string>
+
+    <!-- MenuFragment -->
+    <string name="menu_fragment_title">Меню</string>
+    <string name="menu_fragment_settings">Настройки</string>
+    <string name="menu_fragment_about_app">О приложении</string>
+
+
+    <!-- EmptyFragment -->
+    <string name="empty_fragment_not_selected">Ничего не выбрано</string>
+
+    <!-- AboutAppFragment -->
+    <string name="about_app_fragment_title">О приложении</string>
+    <string name="about_app_fragment_developer">Разработчик: Федотов Яков</string>
+    <string name="about_app_fragment_version">Версия: %1s</string>
 
 </resources>

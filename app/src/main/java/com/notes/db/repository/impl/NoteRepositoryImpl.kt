@@ -18,6 +18,7 @@ class NoteRepositoryImpl(
     private val noteDao: NoteDao,
 ) : NoteRepository {
     override fun notes(): Flow<List<NoteModel>> = flow {
+        deleteEmpty()
         emit(noteDao.notes().map { entity -> entity.toModel })
     }
 
@@ -25,7 +26,7 @@ class NoteRepositoryImpl(
         emit(noteDao.lastNote().toModel)
     }
 
-    override fun note(id: Int): Flow<NoteModel> = flow  {
+    override fun note(id: Int): Flow<NoteModel> = flow {
         emit(noteDao.note(id).toModel)
     }
 
@@ -43,6 +44,16 @@ class NoteRepositoryImpl(
 
     override suspend fun delete(note: List<NoteModel>) {
         noteDao.delete(note.map { model -> model.toEntity })
+    }
+
+    override suspend fun delete(note: NoteModel) {
+        noteDao.delete(note.toEntity)
+    }
+
+    override suspend fun deleteEmpty() {
+        noteDao.delete(
+            noteDao.notes().filter { it.name.isEmpty() }
+        )
     }
 
     override suspend fun clear() {
