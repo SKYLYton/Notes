@@ -37,6 +37,8 @@ data class NoteModel(
     fun clone(name: String, text: String, date: String): NoteModel {
         return NoteModel(id, name, text, date)
     }
+
+    fun toStringForShare() = "$name\n\n$text\n\n$date"
 }
 
 val NoteEntity.toModel: NoteModel

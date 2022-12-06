@@ -3,6 +3,8 @@ package com.notes.ui.fragment.notes
 import android.os.Bundle
 import android.view.View
 import androidx.activity.OnBackPressedCallback
+import androidx.appcompat.widget.SearchView
+import androidx.core.view.children
 import androidx.fragment.app.viewModels
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
@@ -54,8 +56,10 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
                 adapter.unSelectAll()
             }
 
-            appBar.setAppBarOnMenuItemClickListener = {
-                viewModel.addNote()
+            appBar.setAppBarOnMenuItemClickListener = { item ->
+                when (item.itemId) {
+                    R.id.add -> viewModel.addNote()
+                }
             }
 
             appBar.setSecondAppBarOnMenuItemClickListener = { item ->
@@ -71,6 +75,8 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
             }
         }
 
+        initSearchView()
+
         addHandleBackCallBackActivity(callback)
 
 
@@ -79,6 +85,25 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
             subscribe(selectedNoteState) { handleSelectedNoteState(it) }
             subscribe(addNoteState) { handleAddNoteState(it) }
             start()
+        }
+    }
+
+    private fun initSearchView() {
+        runBinding {
+            val searchView =
+                appBar.firstMenu.children.find { it.itemId == R.id.search }?.actionView as? SearchView
+
+            searchView?.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
+                override fun onQueryTextSubmit(query: String?): Boolean {
+                    return true
+                }
+
+                override fun onQueryTextChange(newText: String?): Boolean {
+                    viewModel.textQuery = newText?.trim()
+                    viewModel.update()
+                    return true
+                }
+            })
         }
     }
 
