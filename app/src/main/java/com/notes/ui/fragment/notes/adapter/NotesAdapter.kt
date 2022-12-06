@@ -26,12 +26,18 @@ class NotesAdapter :
         private set
 
     override fun submitList(list: List<NoteModel>?) {
-        super.submitList(list?.toMutableList())
+        val update = editingMode
+        editingMode = false
+        countSelected = 0
+        submitList(list) {
+            if (update) {
+                notifyItemRangeChanged(0, itemCount)
+            }
+        }
         this.list = list ?: emptyList()
     }
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): NotesViewHolder {
-
         return NotesViewHolder(
             ItemNoteBinding.inflate(
                 LayoutInflater.from(parent.context),
@@ -61,13 +67,13 @@ class NotesAdapter :
                         notifyItemChanged(adapterPosition)
                     }
                     else -> {
-                        note.isCheck = false
                         if (--countSelected <= 0) {
-                            editingMode = false
-                            countSelected = 0
+                            unSelectAll()
+                        } else {
+                            note.isCheck = false
+                            notifyItemChanged(adapterPosition)
                         }
                         onItemSelectedListener?.invoke(note, countSelected)
-                        notifyItemChanged(adapterPosition)
                     }
                 }
             }
@@ -80,7 +86,7 @@ class NotesAdapter :
                         onItemSelectedListener?.invoke(getItem(adapterPosition), countSelected)
                         note.isCheck = true
                     }
-                    notifyItemChanged(adapterPosition)
+                    notifyItemRangeChanged(0, itemCount)
                 }
                 true
             }
@@ -90,9 +96,21 @@ class NotesAdapter :
             binding.apply {
                 name.text = item.name
                 date.text = item.date
-                check.isVisible = item.isCheck
+                text.text = item.text
+                check.isVisible = editingMode
+                check.isSelected = item.isCheck
             }
         }
+    }
+
+    fun selectAll() {
+        repeat(itemCount) {
+            getItem(it).isCheck = true
+        }
+        editingMode = true
+        countSelected = itemCount
+        notifyItemRangeChanged(0, itemCount)
+        onItemSelectedListener?.invoke(getItem(itemCount - 1), countSelected)
     }
 
     fun unSelectAll() {

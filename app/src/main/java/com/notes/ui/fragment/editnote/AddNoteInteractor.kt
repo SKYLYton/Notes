@@ -1,4 +1,4 @@
-package com.notes.ui.fragment.notes
+package com.notes.ui.fragment.editnote
 
 import com.notes.db.repository.NoteRepository
 import com.notes.model.NoteModel
@@ -10,21 +10,12 @@ import javax.inject.Inject
 /**
  * @author Fedotov Yakov
  */
-class NotesInteractor @Inject constructor(
+class AddNoteInteractor @Inject constructor(
     private val noteRepository: NoteRepository
 ) : BaseInteractor() {
 
-    fun fetchNotes() = noteRepository.notes()
-
-    fun fetchNote(noteId: Int) = noteRepository.note(noteId)
-
     fun saveNote(note: NoteModel) = flow {
         noteRepository.update(note)
-        emit(noteRepository.lastNote().first())
-    }
-
-    fun deleteNotes(notes: List<NoteModel>) = flow {
-        noteRepository.delete(notes)
-        emit(noteRepository.notes().first())
+        emit(noteRepository.note(note.id ?: 0).first())
     }
 }

@@ -24,6 +24,10 @@ interface NoteRepository {
 
     suspend fun delete(note: List<NoteModel>)
 
+    suspend fun delete(note: NoteModel)
+
+    suspend fun deleteEmpty()
+
     suspend fun clear()
 
 }

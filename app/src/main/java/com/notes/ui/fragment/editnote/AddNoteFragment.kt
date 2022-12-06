@@ -1,4 +1,4 @@
-package com.notes.ui.fragment.note
+package com.notes.ui.fragment.editnote
 
 import android.os.Bundle
 import android.view.View
@@ -23,8 +23,8 @@ import java.util.*
  * @author Fedotov Yakov
  */
 @AndroidEntryPoint
-class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteBinding::inflate) {
-    private val viewModel: EditNoteViewModel by viewModels()
+class AddNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteBinding::inflate) {
+    private val viewModel: AddNoteViewModel by viewModels()
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
@@ -35,8 +35,7 @@ class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteB
         }
 
         arguments?.let { bundle ->
-            viewModel.noteModel =
-                EditNoteFragmentArgs.fromBundle(bundle).noteModelKey ?: NoteModel()
+            viewModel.noteModel = AddNoteFragmentArgs.fromBundle(bundle).noteModelKey ?: NoteModel()
         }
 
         viewModel.apply {
@@ -46,13 +45,10 @@ class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteB
 
         runBinding {
             container = root
-
             name.setText(viewModel.noteModel.name)
             description.setText(viewModel.noteModel.text)
 
-            description.isVisible = !name.text.isNullOrEmpty()
-
-            appBar.setTitle(R.string.edit_note_fragment_title_edit)
+            appBar.setTitle(R.string.edit_note_fragment_title_new)
 
             if (isLandscape) {
                 appBar.setNavigationIcon(R.drawable.ic_close)
@@ -63,14 +59,13 @@ class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteB
             appBar.setNavigationOnClickListener {
                 onBackPressed()
             }
-
-            name.doOnTextChanged { text, start, before, count ->
+            name.doOnTextChanged { text, _, _, _ ->
                 runWithAnim()
                 description.isVisible = !text.isNullOrEmpty()
                 processNote()
             }
 
-            description.doOnTextChanged { text, start, before, count ->
+            description.doOnTextChanged { _, _, _, _ ->
                 processNote()
             }
         }
@@ -78,7 +73,7 @@ class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteB
 
     private fun processNote() {
         runBinding {
-            viewModel.saveNote(
+            viewModel.processNote(
                 NoteModel(
                     name.text.toString(),
                     description.text.toString(),
@@ -109,5 +104,4 @@ class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteB
         findNavController().sendResult(NOTES_UPDATE_KEY, UpdateModel)
         super.onDestroyView()
     }
-
 }

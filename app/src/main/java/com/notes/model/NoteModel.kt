@@ -12,7 +12,7 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class NoteModel(
     val id: Int?, val name: String, val text: String, val date: String, var isCheck: Boolean
-): Parcelable {
+) : Parcelable {
     constructor(name: String, text: String, date: String) : this(
         null,
         name,
@@ -29,8 +29,14 @@ data class NoteModel(
         false
     )
 
+    constructor() : this(null, "", "", "")
+
     fun equalsFromDB(noteDB: NoteModel) =
         this.run { noteDB.name == name && noteDB.text == text && noteDB.date == date }
+
+    fun clone(name: String, text: String, date: String): NoteModel {
+        return NoteModel(id, name, text, date)
+    }
 }
 
 val NoteEntity.toModel: NoteModel
