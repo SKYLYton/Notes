@@ -3,6 +3,7 @@ package com.notes.ui.view
 import android.content.Context
 import android.util.AttributeSet
 import android.view.LayoutInflater
+import android.view.Menu
 import android.view.MenuItem
 import androidx.annotation.MenuRes
 import androidx.annotation.StringRes
@@ -30,6 +31,9 @@ class DoubleAppBar(
     var navigationOnClickListener: (() -> Unit)? = null
     var setAppBarOnMenuItemClickListener: ((MenuItem) -> Unit)? = null
     var setSecondAppBarOnMenuItemClickListener: ((MenuItem) -> Boolean)? = null
+
+    val firstMenu: Menu
+        get() = binding.topAppBar.menu
 
     init {
 

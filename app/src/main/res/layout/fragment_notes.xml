@@ -5,7 +5,7 @@
     android:layout_height="match_parent">
 
     <com.notes.ui.view.DoubleAppBar
-        android:id="@+id/appBar"
+        android:id="@+id/app_bar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:firstMenu="@menu/menu_default"
@@ -13,6 +13,16 @@
         app:layout_constraintTop_toTopOf="parent"
         app:secondMenu="@menu/menu_action"
         app:title="@string/notes_fragment_title" />
+
+    <androidx.appcompat.widget.SearchView
+        android:id="@+id/search_view"
+        android:layout_width="0dp"
+        android:layout_height="?attr/actionBarSize"
+        android:layoutDirection="rtl"
+        android:visibility="gone"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/notes"
@@ -22,6 +32,13 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/appBar" />
+        app:layout_constraintTop_toBottomOf="@id/app_bar_barrier" />
+
+    <androidx.constraintlayout.widget.Barrier
+        android:id="@+id/app_bar_barrier"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:barrierDirection="bottom"
+        app:constraint_referenced_ids="app_bar, search_view" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

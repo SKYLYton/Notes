@@ -27,6 +27,8 @@ class NotesViewModel @Inject constructor(
 
     var selectedNoteId: Int? = null
 
+    var textQuery: String? = ""
+
     override fun onStart() {
         update()
     }
@@ -46,7 +48,18 @@ class NotesViewModel @Inject constructor(
     }
 
     fun update() {
-        interactor.fetchNotes().handleResult(_uiState)
+        interactor.fetchNotes().handleResult(onSuccess = { notes ->
+            if (textQuery.isNullOrEmpty()) {
+                emit(_uiState, BaseState.Success(notes))
+            } else {
+                emit(
+                    _uiState,
+                    BaseState.Success(notes.filter {
+                        it.name.contains(textQuery!!) || it.text.contains(textQuery!!)
+                    })
+                )
+            }
+        })
     }
 
     fun deleteNotes(notes: List<NoteModel>) {
