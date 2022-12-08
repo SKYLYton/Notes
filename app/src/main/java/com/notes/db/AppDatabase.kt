@@ -26,5 +26,5 @@ import com.notes.db.entity.NoteEntity
 @TypeConverters(Converters::class)
 abstract class AppDatabase : RoomDatabase() {
     abstract fun noteDao(): NoteDao
-    abstract fun deleteNoteDau(): DeleteNoteDao
+    abstract fun deleteNoteDao(): DeleteNoteDao
 }
