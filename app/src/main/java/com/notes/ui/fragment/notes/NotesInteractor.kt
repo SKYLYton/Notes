@@ -27,4 +27,9 @@ class NotesInteractor @Inject constructor(
         noteRepository.delete(notes)
         emit(noteRepository.notes().first())
     }
+
+    fun deleteNote(note: NoteModel) = flow {
+        noteRepository.delete(note)
+        emit(noteRepository.notes().first())
+    }
 }

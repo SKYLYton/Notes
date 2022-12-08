@@ -14,7 +14,7 @@ android {
 
     defaultConfig {
         applicationId "com.notes"
-        minSdk 24
+        minSdk 28
         targetSdk 33
         versionCode 1
         versionName "1.0"
@@ -93,5 +93,9 @@ dependencies {
     kapt "androidx.room:room-compiler:2.4.3"
     implementation "androidx.room:room-ktx:2.4.3"
 
+    /*
+    * Blurvieц
+    */
+    implementation 'com.eightbitlab:blurview:1.6.3'
 
 }

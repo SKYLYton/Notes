@@ -1,6 +1,8 @@
 package com.notes.db.repository.impl
 
+import com.notes.db.dao.DeleteNoteDao
 import com.notes.db.dao.NoteDao
+import com.notes.db.entity.toDeleteEntity
 import com.notes.db.repository.NoteRepository
 import com.notes.model.NoteModel
 import com.notes.model.toEntity
@@ -16,6 +18,7 @@ import kotlinx.coroutines.flow.flow
  */
 class NoteRepositoryImpl(
     private val noteDao: NoteDao,
+    private val deleteNoteDao: DeleteNoteDao
 ) : NoteRepository {
     override fun notes(): Flow<List<NoteModel>> = flow {
         deleteEmpty()
@@ -43,11 +46,15 @@ class NoteRepositoryImpl(
     }
 
     override suspend fun delete(note: List<NoteModel>) {
-        noteDao.delete(note.map { model -> model.toEntity })
+        val listEntity = note.map { model -> model.toEntity }
+        deleteNoteDao.insert(listEntity.map { it.toDeleteEntity })
+        noteDao.delete(listEntity)
     }
 
     override suspend fun delete(note: NoteModel) {
-        noteDao.delete(note.toEntity)
+        val noteEntity = note.toEntity
+        deleteNoteDao.insert(noteEntity.toDeleteEntity)
+        noteDao.delete(noteEntity)
     }
 
     override suspend fun deleteEmpty() {

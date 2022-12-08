@@ -52,7 +52,7 @@
     <color name="background_2">#ECECEC</color>
     <color name="background_3">#FFFFFF</color>
     <color name="background_4">#F6F6F6</color>
-    <color name="background_5">#F6F6F6</color>
+    <color name="background_5">#4D000000</color>
 
 
     <color name="action">#FF6200EE</color>
