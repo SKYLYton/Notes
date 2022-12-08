@@ -65,4 +65,8 @@ class NotesViewModel @Inject constructor(
     fun deleteNotes(notes: List<NoteModel>) {
         interactor.deleteNotes(notes).handleResult(_uiState)
     }
+
+    fun deleteNote(note: NoteModel) {
+        interactor.deleteNote(note).handleResult(_uiState)
+    }
 }

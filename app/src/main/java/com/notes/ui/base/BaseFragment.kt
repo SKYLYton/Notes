@@ -23,10 +23,10 @@ import kotlinx.coroutines.launch
 /**
  * @author Fedotov Yakov
  */
-typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
+private typealias Inflate<T> = (LayoutInflater, ViewGroup?, Boolean) -> T
 
 abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<Binding>) :
-    Fragment() {
+    Fragment(), DialogActionListener {
 
     private var binding: Binding? = null
 
@@ -122,6 +122,21 @@ abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<
     override fun onDestroyView() {
         super.onDestroyView()
         binding = null
+    }
+
+    final override fun onActionPerformed(code: String, result: Bundle) {
+        when (code) {
+            ACTION -> onDialogActionPerformed(result)
+            DISMISS -> onDialogDismissed()
+        }
+    }
+
+    protected open fun onDialogActionPerformed(bundle: Bundle) {
+        /* no-op */
+    }
+
+    protected open fun onDialogDismissed() {
+        /* no-op */
     }
 
     protected fun onBackPressed() {

@@ -15,7 +15,11 @@ import com.notes.databinding.FragmentNotesBinding
 import com.notes.extension.subscribeOnResult
 import com.notes.model.NoteModel
 import com.notes.model.UpdateModel
+import com.notes.model.toNoteModel
 import com.notes.ui.base.BaseFragment
+import com.notes.ui.dialog.PreviewNoteDialog
+import com.notes.ui.dialog.RESULT_TYPE
+import com.notes.ui.dialog.ResultType
 import com.notes.ui.fragment.empty.EmptyFragmentDirections
 import com.notes.ui.fragment.notes.adapter.NotesAdapter
 import com.notes.ui.state.BaseState
@@ -43,6 +47,10 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
             notes.adapter = adapter
             adapter.onItemClickListener = { note ->
                 navigateToEditNote(note)
+            }
+
+            adapter.onItemLongListener = { note ->
+                PreviewNoteDialog.newInstance(note).show(childFragmentManager, null)
             }
 
             adapter.onItemSelectedListener = { note, count ->
@@ -175,6 +183,17 @@ class NotesFragment : BaseFragment<FragmentNotesBinding>(FragmentNotesBinding::i
             }
         } else {
             navigateSafety(destination)
+        }
+    }
+
+    override fun onDialogActionPerformed(bundle: Bundle) {
+        val type = bundle.getInt(RESULT_TYPE, -1)
+        val noteModel = bundle.toNoteModel ?: NoteModel()
+        when (ResultType.values()[type]) {
+            ResultType.CLICK -> navigateToEditNote(noteModel)
+            ResultType.SELECT -> adapter.select(noteModel.id)
+            ResultType.UNSELECT -> adapter.unSelect(noteModel.id)
+            ResultType.DELETE -> viewModel.deleteNote(noteModel)
         }
     }
 

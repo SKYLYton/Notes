@@ -34,6 +34,15 @@
             app:drawableStartCompat="@drawable/ic_settings" />
 
         <TextView
+            android:id="@+id/deleted_notes"
+            style="@style/Widget.TextView.ItemMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_fragment_deleted_notes"
+            app:drawableEndCompat="@drawable/ic_right"
+            app:drawableStartCompat="@drawable/ic_delete" />
+
+        <TextView
             android:id="@+id/about_app"
             style="@style/Widget.TextView.ItemMenu"
             android:layout_width="match_parent"

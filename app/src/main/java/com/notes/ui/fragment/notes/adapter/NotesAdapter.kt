@@ -17,6 +17,7 @@ class NotesAdapter :
     ListAdapter<NoteModel, NotesAdapter.NotesViewHolder>(NoteDiffCallback) {
 
     var onItemClickListener: ((NoteModel) -> Unit)? = null
+    var onItemLongListener: ((NoteModel) -> Unit)? = null
     var onItemSelectedListener: ((NoteModel, Int) -> Unit)? = null
 
     private var editingMode = false
@@ -77,17 +78,8 @@ class NotesAdapter :
                     }
                 }
             }
-            binding.root.setOnLongClickListener { view ->
-                if (!editingMode) {
-                    val note = getItem(adapterPosition)
-                    editingMode = true
-                    if (!note.isCheck) {
-                        countSelected++
-                        onItemSelectedListener?.invoke(getItem(adapterPosition), countSelected)
-                        note.isCheck = true
-                    }
-                    notifyItemRangeChanged(0, itemCount)
-                }
+            binding.root.setOnLongClickListener {
+                onItemLongListener?.invoke(getItem(adapterPosition))
                 true
             }
         }
@@ -101,6 +93,30 @@ class NotesAdapter :
                 check.isSelected = item.isCheck
             }
         }
+    }
+
+    fun select(id: Int?) {
+        val note = list.find { it.id == id }
+        if (note?.isCheck == false) {
+            countSelected++
+            editingMode = true
+            note.isCheck = true
+            onItemSelectedListener?.invoke(note, countSelected)
+        }
+        notifyItemRangeChanged(0, itemCount)
+
+    }
+
+    fun unSelect(id: Int?) {
+        val note = list.find { it.id == id }
+        if (note?.isCheck == true) {
+            countSelected--
+            editingMode = countSelected > 0
+            note.isCheck = false
+            onItemSelectedListener?.invoke(note, countSelected)
+        }
+        notifyItemRangeChanged(0, itemCount)
+
     }
 
     fun selectAll() {
