@@ -104,4 +104,7 @@ class AddNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteBi
         findNavController().sendResult(NOTES_UPDATE_KEY, UpdateModel)
         super.onDestroyView()
     }
+
+    private val isMainScreen: Boolean
+        get() = mainNavController?.currentDestination?.id == R.id.notesFragment
 }

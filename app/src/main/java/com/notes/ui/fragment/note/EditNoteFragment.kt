@@ -126,4 +126,6 @@ class EditNoteFragment : BaseFragment<FragmentEditNoteBinding>(FragmentEditNoteB
         super.onDestroyView()
     }
 
+    private val isMainScreen: Boolean
+        get() = mainNavController?.currentDestination?.id == R.id.notesFragment
 }

@@ -20,6 +20,7 @@
     <string name="preview_dialog_fragment_select">Выбрать</string>
     <string name="preview_dialog_fragment_unselect">Отменить выбор</string>
     <string name="preview_dialog_fragment_delete">Удалить</string>
+    <string name="preview_dialog_fragment_restore">Восстановить</string>
 
 
     <!-- NotesFragment -->
@@ -45,5 +46,14 @@
     <string name="about_app_fragment_title">О приложении</string>
     <string name="about_app_fragment_developer">Разработчик: Федотов Яков</string>
     <string name="about_app_fragment_version">Версия: %1s</string>
+
+    <!-- DeleteNotesFragment -->
+    <string name="delete_notes_fragment_title">Удаленные заметки</string>
+    <string name="delete_notes_fragment_title_count">Выбрано %d</string>
+
+    <!-- DeleteNoteFragment -->
+    <string name="delete_note_fragment_title">Удаленная заметка</string>
+    <string name="delete_note_fragment_name">Название</string>
+    <string name="delete_note_fragment_text">Текст заметки</string>
 
 </resources>

@@ -17,7 +17,8 @@ data class NoteEntity(
     val id: Int?,
     val name: String,
     val text: String,
-    val date: String
+    val date: String,
+    var isDelete: Boolean = false
 ) : BaseEntity() {
     constructor(name: String, text: String, date: String) : this(null, name, text, date)
 }
