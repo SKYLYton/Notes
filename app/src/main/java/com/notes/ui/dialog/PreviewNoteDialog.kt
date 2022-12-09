@@ -61,6 +61,15 @@ class PreviewNoteDialog :
                 dismissWithAnim()
             }
 
+            restore.setOnClickListener {
+                onActionPerformed(
+                    Bundle(arguments).apply {
+                        putInt(RESULT_TYPE, ResultType.RESTORE.ordinal)
+                    }
+                )
+                dismissWithAnim()
+            }
+
             delete.setOnClickListener {
                 onActionPerformed(
                     Bundle(arguments).apply {
@@ -96,6 +105,7 @@ class PreviewNoteDialog :
                 menu.layoutParams = lp
                 select.isVisible = !noteModel.isCheck
                 unselect.isVisible = noteModel.isCheck
+                restore.isVisible = noteModel.isDeleted
                 delete.isVisible = true
             }
         }
@@ -116,8 +126,10 @@ class PreviewNoteDialog :
             lpMenu.height = ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
             lpNote.matchConstraintPercentHeight = 0.toFloat()
             menu.layoutParams = lpMenu
-            delete.isVisible = false
             select.isVisible = false
+            unselect.isVisible = false
+            restore.isVisible = false
+            delete.isVisible = false
         }
     }
 
@@ -130,7 +142,7 @@ class PreviewNoteDialog :
 }
 
 enum class ResultType {
-    DELETE, CLICK, SELECT, UNSELECT
+    SELECT, UNSELECT, RESTORE, DELETE, CLICK
 }
 
 const val RESULT_TYPE = "RESULT_TYPE"

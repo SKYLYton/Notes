@@ -11,9 +11,30 @@
         <action
             android:id="@+id/action_menuFragment_to_aboutAppFragment"
             app:destination="@id/aboutAppFragment" />
+        <action
+            android:id="@+id/action_menuFragment_to_deletedNotesFragment"
+            app:destination="@id/deletedNotesFragment" />
     </fragment>
     <fragment
         android:id="@+id/aboutAppFragment"
         android:name="com.notes.ui.fragment.aboutapp.AboutAppFragment"
         android:label="AboutAppFragment" />
+    <fragment
+        android:id="@+id/deletedNotesFragment"
+        android:name="com.notes.ui.fragment.deleted.notes.DeletedNotesFragment"
+        android:label="DeletedNotesFragment">
+        <action
+            android:id="@+id/action_deletedNotesFragment_to_deletedNoteFragment"
+            app:destination="@id/deletedNoteFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/deletedNoteFragment"
+        android:name="com.notes.ui.fragment.deleted.note.DeletedNoteFragment"
+        android:label="DeletedNoteFragment">
+        <argument
+            android:name="noteModelKey"
+            app:argType="com.notes.model.NoteModel"
+            android:defaultValue="@null"
+            app:nullable="true" />
+    </fragment>
 </navigation>

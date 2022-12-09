@@ -11,6 +11,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.lifecycle.repeatOnLifecycle
+import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import androidx.navigation.fragment.findNavController
 import androidx.transition.AutoTransition
@@ -146,8 +147,8 @@ abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<
     protected val isLandscape: Boolean
         get() = (activity as MainActivity).isLandscape
 
-    protected val isMainScreen: Boolean
-        get() = (activity as MainActivity).isMainScreen
+    protected val mainNavController: NavController?
+        get() = (activity as MainActivity).navController
 
     protected val mainActivity: MainActivity?
         get() = activity as? MainActivity

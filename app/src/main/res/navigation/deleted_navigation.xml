@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/delete_navigation"
+    app:startDestination="@id/deletedEmptyFragment">
+
+    <fragment
+        android:id="@+id/deletedNoteFragment"
+        android:name="com.notes.ui.fragment.deleted.note.DeletedNoteFragment"
+        android:label="DeletedNoteFragment">
+        <argument
+            android:name="noteModelKey"
+            android:defaultValue="@null"
+            app:argType="com.notes.model.NoteModel"
+            app:nullable="true" />
+    </fragment>
+
+    <fragment
+        android:id="@+id/deletedEmptyFragment"
+        android:name="com.notes.ui.fragment.deleted.empty.DeletedEmptyFragment"
+        android:label="DeletedEmptyFragment">
+
+        <action
+            android:id="@+id/action_deletedEmptyFragment_to_deletedNoteFragment"
+            app:destination="@id/deletedNoteFragment" />
+    </fragment>
+
+</navigation>

@@ -28,7 +28,7 @@ class DoubleAppBar(
 
     private var defaultTitle: String
 
-    var navigationOnClickListener: (() -> Unit)? = null
+    var navigationOnClickListener: ((TypeTopAppBar) -> Unit)? = null
     var setAppBarOnMenuItemClickListener: ((MenuItem) -> Unit)? = null
     var setSecondAppBarOnMenuItemClickListener: ((MenuItem) -> Boolean)? = null
 
@@ -48,6 +48,9 @@ class DoubleAppBar(
             val secondMenu =
                 getResourceId(R.styleable.DoubleAppBar_secondMenu, 0)
 
+            val navigationIcon =
+                getDrawable(R.styleable.DoubleAppBar_navigationIcon)
+
             defaultTitle =
                 getString(R.styleable.DoubleAppBar_title) ?: ""
 
@@ -56,11 +59,15 @@ class DoubleAppBar(
 
 
             if (firstMenu != 0) {
-                setFirstMenu(firstMenu)
+                setMenu(TypeTopAppBar.FIRST, firstMenu)
             }
 
             if (secondMenu != 0) {
-                setSecondMenu(secondMenu)
+                setMenu(TypeTopAppBar.SECOND, secondMenu)
+            }
+
+            navigationIcon?.let {
+                binding.topAppBar.navigationIcon = it
             }
         }
 
@@ -75,18 +82,21 @@ class DoubleAppBar(
             true
         }
 
+        binding.topAppBar.setNavigationOnClickListener {
+            navigationOnClickListener?.invoke(TypeTopAppBar.FIRST)
+        }
+
         binding.secondTopAppBar.setNavigationOnClickListener {
             visibleSecondMenu(false)
-            navigationOnClickListener?.invoke()
+            navigationOnClickListener?.invoke(TypeTopAppBar.SECOND)
         }
     }
 
-    fun setFirstMenu(@MenuRes menuRes: Int) {
-        binding.topAppBar.inflateMenu(menuRes)
-    }
-
-    fun setSecondMenu(@MenuRes menuRes: Int) {
-        binding.secondTopAppBar.inflateMenu(menuRes)
+    fun setMenu(typeTopAppBar: TypeTopAppBar, @MenuRes menuRes: Int) {
+        when (typeTopAppBar) {
+            TypeTopAppBar.FIRST -> binding.topAppBar.inflateMenu(menuRes)
+            TypeTopAppBar.SECOND -> binding.secondTopAppBar.inflateMenu(menuRes)
+        }
     }
 
     fun visibleSecondMenu(visible: Boolean) {
@@ -108,4 +118,8 @@ class DoubleAppBar(
     fun setSecondTitle(text: String) {
         binding.secondTopAppBar.title = text
     }
+}
+
+enum class TypeTopAppBar {
+    FIRST, SECOND
 }

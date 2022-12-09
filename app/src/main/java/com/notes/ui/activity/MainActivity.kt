@@ -19,7 +19,8 @@ class MainActivity : AppCompatActivity() {
 
     private var currentNavController: LiveData<NavController>? = null
 
-    private var navController: NavController? = null
+    var navController: NavController? = null
+        private set
 
 
     private val onDestinationChangedListener =
@@ -83,9 +84,5 @@ class MainActivity : AppCompatActivity() {
 
     val isLandscape: Boolean
         get() = resources.configuration.orientation == Configuration.ORIENTATION_LANDSCAPE
-
-    val isMainScreen: Boolean
-        get() = navController?.currentDestination?.id == R.id.notesFragment
-
 
 }

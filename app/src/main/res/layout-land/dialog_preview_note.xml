@@ -92,6 +92,15 @@
             app:drawableEndCompat="@drawable/ic_unchecked" />
 
         <TextView
+            android:id="@+id/restore"
+            style="@style/Widget.TextView.ItemMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/preview_dialog_fragment_restore"
+            android:visibility="gone"
+            app:drawableEndCompat="@drawable/ic_restore" />
+
+        <TextView
             android:id="@+id/delete"
             style="@style/Widget.TextView.ItemMenu"
             android:layout_width="match_parent"

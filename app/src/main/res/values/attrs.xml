@@ -3,11 +3,13 @@
 
     <declare-styleable name="DoubleAppBar">
 
-        <attr name="firstMenu" format="reference"/>
+        <attr name="firstMenu" format="reference" />
 
-        <attr name="secondMenu" format="reference"/>
+        <attr name="secondMenu" format="reference" />
 
         <attr name="title" />
+
+        <attr name="navigationIcon" />
 
     </declare-styleable>
 

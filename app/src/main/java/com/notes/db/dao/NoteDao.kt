@@ -26,6 +26,9 @@ interface NoteDao {
     suspend fun insert(list: List<NoteEntity>)
 
     @Update
+    suspend fun update(note: List<NoteEntity>)
+
+    @Update
     suspend fun update(note: NoteEntity)
 
     @Delete

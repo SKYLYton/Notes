@@ -13,6 +13,11 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::infl
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         runBinding {
+
+            deletedNotes.setOnClickListener {
+                navigateSafety(MenuFragmentDirections.actionMenuFragmentToDeletedNotesFragment())
+            }
+
             aboutApp.setOnClickListener {
                 navigateSafety(MenuFragmentDirections.actionMenuFragmentToAboutAppFragment())
             }

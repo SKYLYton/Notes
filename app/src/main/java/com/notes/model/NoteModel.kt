@@ -11,7 +11,12 @@ import kotlinx.parcelize.Parcelize
  */
 @Parcelize
 data class NoteModel(
-    val id: Int?, val name: String, val text: String, val date: String, var isCheck: Boolean
+    val id: Int?,
+    val name: String,
+    val text: String,
+    val date: String,
+    val isDeleted: Boolean,
+    var isCheck: Boolean = false
 ) : Parcelable {
     constructor(name: String, text: String, date: String) : this(
         null,
@@ -35,14 +40,14 @@ data class NoteModel(
         this.run { noteDB.name == name && noteDB.text == text && noteDB.date == date }
 
     fun clone(name: String, text: String, date: String): NoteModel {
-        return NoteModel(id, name, text, date)
+        return NoteModel(id, name, text, date, isDeleted)
     }
 
     fun toStringForShare() = "$name\n\n$text\n\n$date"
 }
 
 val NoteEntity.toModel: NoteModel
-    get() = NoteModel(id, name, text, date)
+    get() = NoteModel(id, name, text, date, isDelete)
 
 val NoteModel.toEntity: NoteEntity
     get() = NoteEntity(id, name, text, date)

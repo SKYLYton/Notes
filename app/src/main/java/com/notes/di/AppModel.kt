@@ -35,9 +35,6 @@ object AppModel {
     @Provides
     @Singleton
     fun provideNoteRepository(appDatabase: AppDatabase): NoteRepository =
-        NoteRepositoryImpl(
-            appDatabase.noteDao(),
-            appDatabase.deleteNoteDao()
-        )
+        NoteRepositoryImpl(appDatabase.noteDao())
 
 }
