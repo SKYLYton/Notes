@@ -1,6 +1,6 @@
 package com.notes.ui.fragment.notes
 
-import com.notes.db.repository.NoteRepository
+import com.notes.db.room.repository.NoteRepository
 import com.notes.model.NoteModel
 import com.notes.ui.base.BaseInteractor
 import kotlinx.coroutines.flow.first
@@ -14,7 +14,14 @@ class NotesInteractor @Inject constructor(
     private val noteRepository: NoteRepository
 ) : BaseInteractor() {
 
-    fun fetchNotes() = noteRepository.notes()
+    fun fetchNotes() = noteRepository.notesNotDeleted()
+
+    fun fetchNotesNotSent() = noteRepository.notes()
+
+    fun fetchSentNotes() = flow {
+        val notes = noteRepository.notes().first()
+        emit(notes.filter { it.isSent })
+    }
 
     fun fetchNote(noteId: Int) = noteRepository.note(noteId)
 
@@ -25,11 +32,11 @@ class NotesInteractor @Inject constructor(
 
     fun deleteNotes(notes: List<NoteModel>) = flow {
         noteRepository.delete(notes)
-        emit(noteRepository.notes().first())
+        emit(noteRepository.notesNotDeleted().first())
     }
 
     fun deleteNote(note: NoteModel) = flow {
         noteRepository.delete(note)
-        emit(noteRepository.notes().first())
+        emit(noteRepository.notesNotDeleted().first())
     }
 }

@@ -5,9 +5,9 @@ import androidx.lifecycle.viewModelScope
 import androidx.navigation.NavController
 import androidx.navigation.NavDirections
 import com.notes.ui.state.BaseState
-import kotlinx.coroutines.*
+import kotlinx.coroutines.CoroutineExceptionHandler
 import kotlinx.coroutines.flow.*
-import kotlin.coroutines.CoroutineContext
+import kotlinx.coroutines.launch
 
 /**
  * @author Fedotov Yakov
@@ -17,7 +17,7 @@ abstract class BaseViewModel : ViewModel() {
     private val _navigation = MutableSharedFlow<NavDirections>()
     val navigation = _navigation.asSharedFlow()
 
-    private val _error = MutableSharedFlow<String>()
+    protected val _error = MutableSharedFlow<String>()
     val error = _error.asSharedFlow()
 
     private var isStarted: Boolean = false

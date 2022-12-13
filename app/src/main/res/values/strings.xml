@@ -22,6 +22,21 @@
     <string name="preview_dialog_fragment_delete">Удалить</string>
     <string name="preview_dialog_fragment_restore">Восстановить</string>
 
+    <!-- RegistrationFragment -->
+    <string name="registration_fragment_title">Регистрация</string>
+    <string name="registration_fragment_login">Почта</string>
+    <string name="registration_fragment_password">Пароль</string>
+    <string name="registration_fragment_repeat_password">Пароль еще раз</string>
+    <string name="registration_fragment_register">Зарегистрироваться</string>
+    <string name="registration_fragment_auth">Авторизация</string>
+    <string name="registration_fragment_passwords_no_equals">Пароли не совпадают</string>
+
+    <!-- AuthFragment -->
+    <string name="auth_fragment_title">Авторизация</string>
+    <string name="auth_fragment_login">Почта</string>
+    <string name="auth_fragment_password">Пароль</string>
+    <string name="auth_fragment_login_up">Войти</string>
+    <string name="auth_fragment_register">Регистрация</string>
 
     <!-- NotesFragment -->
     <string name="notes_fragment_title">Заметки</string>
@@ -38,6 +53,7 @@
     <string name="menu_fragment_settings">Настройки</string>
     <string name="menu_fragment_about_app">О приложении</string>
     <string name="menu_fragment_deleted_notes">Удаленные заметки</string>
+    <string name="menu_fragment_log_out">Выйти</string>
 
     <!-- EmptyFragment -->
     <string name="empty_fragment_not_selected">Ничего не выбрано</string>

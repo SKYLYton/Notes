@@ -9,9 +9,7 @@ import javax.inject.Inject
  * @author Fedotov Yakov
  */
 @HiltViewModel
-class DeletedNoteViewModel @Inject constructor(
-    private val interactor: DeletedNoteInteractor
-) : BaseViewModel() {
+class DeletedNoteViewModel @Inject constructor() : BaseViewModel() {
 
     var noteModel: NoteModel = NoteModel()
 

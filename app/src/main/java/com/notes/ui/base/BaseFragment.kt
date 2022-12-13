@@ -42,6 +42,11 @@ abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<
     protected var container: ViewGroup? = null
 
     /**
+     * Виден ли нижний навигационный бар
+     */
+    protected open val isBottomNavVisible: Boolean = true
+
+    /**
      * Слушатель, который вызывают при нажатии кнопки "назад"
      */
     val onBackNavigationListener: ((View) -> Unit) = {
@@ -50,6 +55,11 @@ abstract class BaseFragment<Binding : ViewBinding>(private val inflate: Inflate<
 
     private val transition = AutoTransition().apply {
         duration = 200
+    }
+
+    override fun onCreate(savedInstanceState: Bundle?) {
+        super.onCreate(savedInstanceState)
+        mainActivity?.bottomNavVisible(isBottomNavVisible)
     }
 
     override fun onCreateView(

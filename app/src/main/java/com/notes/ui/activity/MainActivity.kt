@@ -2,18 +2,25 @@ package com.notes.ui.activity
 
 import android.content.res.Configuration
 import android.os.Bundle
-import androidx.appcompat.app.AppCompatActivity
+import android.view.View
+import android.view.ViewTreeObserver
+import androidx.activity.viewModels
+import androidx.core.view.isVisible
 import androidx.lifecycle.LiveData
 import androidx.navigation.NavController
 import androidx.navigation.ui.setupActionBarWithNavController
 import com.notes.R
 import com.notes.databinding.ActivityMainBinding
 import com.notes.extension.setupWithNavController
+import com.notes.ui.base.BaseActivity
+import com.notes.ui.fragment.splash.SplashScreenFragmentDirections
 import dagger.hilt.android.AndroidEntryPoint
 
 
 @AndroidEntryPoint
-class MainActivity : AppCompatActivity() {
+class MainActivity : BaseActivity() {
+
+    private val viewModel: MainActivityViewModel by viewModels()
 
     private lateinit var binding: ActivityMainBinding
 
@@ -35,13 +42,34 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        viewModel.apply {
+            start()
+        }
+
         actionBar?.hide()
         supportActionBar?.hide()
 
         if (savedInstanceState == null) {
             setUpBottomNavigationBar()
         }
+        processSplash()
+    }
 
+    private fun processSplash() {
+        val content: View = findViewById(android.R.id.content)
+        content.viewTreeObserver.addOnPreDrawListener(
+            object : ViewTreeObserver.OnPreDrawListener {
+                override fun onPreDraw(): Boolean {
+                    if (viewModel.isAuth()) {
+                        navController?.navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToNotesFragment())
+                    } else {
+                        navController?.navigate(SplashScreenFragmentDirections.actionSplashScreenFragmentToAuthFragment())
+                    }
+                    content.viewTreeObserver.removeOnPreDrawListener(this)
+                    return true
+                }
+            }
+        )
     }
 
     override fun onRestoreInstanceState(savedInstanceState: Bundle) {
@@ -80,6 +108,12 @@ class MainActivity : AppCompatActivity() {
 
     override fun onSupportNavigateUp(): Boolean {
         return currentNavController?.value?.navigateUp() ?: false
+    }
+
+    fun bottomNavVisible(isVisible: Boolean) {
+        if (::binding.isInitialized) {
+            binding.navView.isVisible = isVisible
+        }
     }
 
     val isLandscape: Boolean
