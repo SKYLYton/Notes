@@ -51,6 +51,16 @@
             app:drawableEndCompat="@drawable/ic_right"
             app:drawableStartCompat="@drawable/ic_device_information" />
 
+
+        <TextView
+            android:id="@+id/log_out"
+            style="@style/Widget.TextView.ItemMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="@string/menu_fragment_log_out"
+            android:textColor="@color/red"
+            android:drawableTint="@color/red"
+            app:drawableStartCompat="@drawable/ic_logout" />
     </LinearLayout>
 
     <androidx.constraintlayout.widget.Guideline

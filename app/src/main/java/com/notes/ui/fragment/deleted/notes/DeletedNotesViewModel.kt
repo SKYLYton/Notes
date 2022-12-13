@@ -1,5 +1,6 @@
 package com.notes.ui.fragment.deleted.notes
 
+import com.notes.db.firestore.FirestoreManager
 import com.notes.model.NoteModel
 import com.notes.ui.base.BaseViewModel
 import com.notes.ui.state.BaseState
@@ -13,7 +14,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class DeletedNotesViewModel @Inject constructor(
-    private val interactor: DeletedNotesInteractor
+    private val interactor: DeletedNotesInteractor,
+    private val firestoreManager: FirestoreManager
 ) : BaseViewModel() {
 
     private val _uiState = MutableSharedFlow<BaseState<List<NoteModel>>>()
@@ -39,6 +41,9 @@ class DeletedNotesViewModel @Inject constructor(
     }
 
     fun update() {
+        interactor.fetchNotesNotSent().handleResult(onSuccess = { notes ->
+            firestoreManager.updateNotes(notes)
+        })
         interactor.fetchNotes().handleResult(onSuccess = { notes ->
             if (textQuery.isNullOrEmpty()) {
                 emit(_uiState, BaseState.Success(notes))

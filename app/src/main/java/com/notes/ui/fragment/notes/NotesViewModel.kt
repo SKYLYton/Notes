@@ -1,5 +1,6 @@
 package com.notes.ui.fragment.notes
 
+import com.notes.db.firestore.FirestoreManager
 import com.notes.model.NoteModel
 import com.notes.ui.base.BaseViewModel
 import com.notes.ui.state.BaseState
@@ -13,7 +14,8 @@ import javax.inject.Inject
  */
 @HiltViewModel
 class NotesViewModel @Inject constructor(
-    private val interactor: NotesInteractor
+    private val interactor: NotesInteractor,
+    private val firestoreManager: FirestoreManager
 ) : BaseViewModel() {
 
     private val _uiState = MutableSharedFlow<BaseState<List<NoteModel>>>()
@@ -30,7 +32,8 @@ class NotesViewModel @Inject constructor(
     var textQuery: String? = ""
 
     override fun onStart() {
-        update()
+        /* no-op */
+        //update()
     }
 
     fun loadSelectedId() {
@@ -48,6 +51,9 @@ class NotesViewModel @Inject constructor(
     }
 
     fun update() {
+        interactor.fetchNotesNotSent().handleResult(onSuccess = { notes ->
+            firestoreManager.updateNotes(notes)
+        })
         interactor.fetchNotes().handleResult(onSuccess = { notes ->
             if (textQuery.isNullOrEmpty()) {
                 emit(_uiState, BaseState.Success(notes))

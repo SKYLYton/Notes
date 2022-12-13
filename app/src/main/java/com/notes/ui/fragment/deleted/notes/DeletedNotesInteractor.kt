@@ -1,6 +1,6 @@
 package com.notes.ui.fragment.deleted.notes
 
-import com.notes.db.repository.NoteRepository
+import com.notes.db.room.repository.NoteRepository
 import com.notes.model.NoteModel
 import com.notes.ui.base.BaseInteractor
 import kotlinx.coroutines.flow.first
@@ -15,6 +15,8 @@ class DeletedNotesInteractor @Inject constructor(
 ) : BaseInteractor() {
 
     fun fetchNotes() = noteRepository.deletedNotes()
+
+    fun fetchNotesNotSent() = noteRepository.notes()
 
     fun fetchNote(noteId: Int) = noteRepository.note(noteId)
 

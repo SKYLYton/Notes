@@ -1,6 +1,6 @@
 package com.notes.ui.fragment.editnote
 
-import com.notes.db.repository.NoteRepository
+import com.notes.db.room.repository.NoteRepository
 import com.notes.model.NoteModel
 import com.notes.ui.base.BaseInteractor
 import kotlinx.coroutines.flow.first
