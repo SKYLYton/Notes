@@ -22,6 +22,8 @@ class MenuFragment : BaseFragment<FragmentMenuBinding>(FragmentMenuBinding::infl
         super.onViewCreated(view, savedInstanceState)
         runBinding {
 
+            progressView1.progress = 20f
+
             deletedNotes.setOnClickListener {
                 navigateSafety(MenuFragmentDirections.actionMenuFragmentToDeletedNotesFragment())
             }
