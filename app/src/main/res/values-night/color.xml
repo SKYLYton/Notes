@@ -53,4 +53,7 @@
 
 
     <color name="action">#FFBB86FC</color>
+
+    <color name="seed">#FFFFFFFF</color>
+
 </resources>

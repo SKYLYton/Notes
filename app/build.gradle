@@ -114,7 +114,5 @@ dependencies {
     */
     implementation('com.jakewharton:process-phoenix:2.1.2')
 
-    implementation "com.github.skydoves:progressview:1.0.8"
-
 
 }

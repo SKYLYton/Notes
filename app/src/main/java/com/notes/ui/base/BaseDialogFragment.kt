@@ -4,7 +4,11 @@ import android.animation.Animator
 import android.animation.Animator.AnimatorListener
 import android.graphics.Color
 import android.os.Bundle
-import android.view.*
+import android.view.KeyEvent
+import android.view.LayoutInflater
+import android.view.View
+import android.view.ViewGroup
+import android.view.WindowManager
 import android.widget.LinearLayout
 import androidx.activity.OnBackPressedCallback
 import androidx.core.view.WindowInsetsControllerCompat
@@ -49,7 +53,7 @@ open class BaseDialogFragment<Binding : ViewBinding>(private val inflate: Inflat
     private var blurView: BlurView? = null
 
     private val transition = AutoTransition().apply {
-        duration = 250
+        duration = DURATION_ANIM
     }
 
     protected open var dismissAnim: (() -> Unit)? = null
@@ -272,3 +276,5 @@ private const val DEFAULT_BLUR_LIVE = false
 
 const val ACTION = "ACTION"
 const val DISMISS = "DISMISS"
+
+const val DURATION_ANIM = 250L

@@ -10,6 +10,7 @@ import com.notes.model.toBundle
 import com.notes.model.toNoteModel
 import com.notes.ui.activity.MainActivity
 import com.notes.ui.base.BaseDialogFragment
+import com.notes.ui.base.DURATION_ANIM
 
 
 /**
@@ -84,6 +85,9 @@ class PreviewNoteDialog :
 
     private fun startAnimOpen() {
         runBinding {
+            note.alpha = 0f
+            menu.alpha = 0f
+
             note.post {
                 runWithAnim()
                 val lp = note.layoutParams as ConstraintLayout.LayoutParams
@@ -108,6 +112,9 @@ class PreviewNoteDialog :
                 restore.isVisible = noteModel.isDeleted
                 delete.isVisible = true
             }
+
+            note.animate().alphaBy(0f).alpha(1f).duration = DURATION_ANIM
+            menu.animate().alphaBy(0f).alpha(1f).duration = DURATION_ANIM
         }
     }
 
@@ -124,8 +131,9 @@ class PreviewNoteDialog :
 
             val lpMenu = menu.layoutParams as ConstraintLayout.LayoutParams
             lpMenu.height = ConstraintLayout.LayoutParams.MATCH_CONSTRAINT
-            lpNote.matchConstraintPercentHeight = 0.toFloat()
             menu.layoutParams = lpMenu
+            note.animate().setStartDelay(DURATION_ANIM).alpha(0f).duration = DURATION_ANIM
+            menu.animate().setStartDelay(DURATION_ANIM).alpha(0f).duration = DURATION_ANIM
             select.isVisible = false
             unselect.isVisible = false
             restore.isVisible = false
